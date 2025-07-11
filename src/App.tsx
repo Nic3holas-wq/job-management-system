@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import JobList from "./pages/JobList";
+import CreateJob from "./pages/CreateJob";
+import EditJob from "./pages/EditJob";
+import JobDetail from "./pages/JobDetail";
+import { Toaster } from 'react-hot-toast';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App: React.FC = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 className='text-gray-500'>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Router>
+      <div className="min-h-screen bg-gray-100 p-4">
+        <header className="flex justify-between items-center mb-6">
+          <Link to='/'><h1 className="text-3xl text-blue-600 font-bold">Job Portal</h1></Link>
+          <Link to="/create" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            + Post Job
+          </Link>
+        </header>
 
-export default App
+        <Routes>
+          <Route path="/" element={<JobList />} />
+          <Route path="/create" element={<CreateJob />} />
+          <Route path="/edit/:id" element={<EditJob />} />
+          <Route path="/job/:id" element={<JobDetail />} />
+        </Routes>
+        <Toaster position="top-right" />
+      </div>
+    </Router>
+  );
+};
+
+export default App;
