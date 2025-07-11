@@ -9,6 +9,23 @@ const JobDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Time elapsed helper
+const getTimeAgo = (createdAt: string): string => {
+    const postedDate = new Date(createdAt);
+    const now = new Date();
+    const diffMs = now.getTime() - postedDate.getTime();
+  
+    const seconds = Math.floor(diffMs / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+  
+    if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+    if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+    return "Just now";
+  };
+  
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/api/jobs/${id}/`)
@@ -65,7 +82,8 @@ const JobDetail: React.FC = () => {
         </div>
         <div>
           <p className="font-semibold">Posted On:</p>
-          <p>{new Date(job.created_at).toLocaleDateString()}</p>
+          <p>{new Date(job.created_at).toLocaleDateString()} </p>
+          <p className="text-blue-400">{getTimeAgo(job.created_at)}</p>
         </div>
       </div>
 

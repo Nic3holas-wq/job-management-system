@@ -38,7 +38,7 @@ const JobCard: React.FC<Props> = ({ job, onDeactivate }) => {
         </div>
         
       </div>
-      <p className="text-gray-700 mt-2">{job.description}</p>
+      <p className="text-gray-700 mt-2 truncate line-clamp-4">{job.description}</p>
       <div className="mt-4 text-sm text-gray-500">
         <p><strong>Company:</strong> {job.company_name}</p>
         <p><strong>Location:</strong> {job.location}</p>
