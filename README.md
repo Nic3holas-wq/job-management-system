@@ -40,6 +40,36 @@ A full-stack **Job Management Web App** that allows users to create, view, updat
 -  Pagination
 -  Toast notifications
 
+<h3> Thought Process</h3>
+
+<p>When building this Job Management Web App, I made a number of technical decisions to improve the developer experience, application stability, and performance.</p>
+
+<h4> Why I Chose TypeScript on the Frontend</h4>
+
+<p>I used TypeScript with React to bring strong typing and structure to the codebase. Since this is a full-stack project with multiple interconnected components (forms, job cards, filters, etc.), TypeScript helped me:</p>
+
+<ul>
+  <li>Catch bugs early during development through compile-time type checking.</li>
+  <li>Clearly define the shape of data (e.g., <code>Job</code>, <code>Company</code>, etc.) which made it easier to work with API responses.</li>
+  <li>Improve code readability and maintainability, especially when passing props between components.</li>
+  <li>Benefit from smarter editor features like auto-completion, type hints, and refactoring support in VS Code.</li>
+</ul>
+
+<p>This decision makes the frontend more <strong>robust</strong>, <strong>self-documenting</strong>, and <strong>easier to scale</strong> as the project grows.</p>
+
+<h4> Search Feature Optimization</h4>
+
+<p>For the job search functionality, I optimized performance by <strong>filtering the already-fetched jobs on the client side</strong>, instead of making repeated API or database calls for every search query.</p>
+
+<p>This approach has several benefits:</p>
+
+<ul>
+  <li><strong>Reduced database load:</strong> By avoiding multiple hits to the backend.</li>
+  <li><strong>Faster UX:</strong> Users get instant search results without waiting for a network response.</li>
+  <li><strong>Offline-resilience:</strong> Since the data is already in memory, it could work even with temporary connection loss.</li>
+</ul>
+
+<p>This client-side filtering strategy fits well for small to medium datasets and results in a <strong>snappier, more responsive UI</strong>.</p>
 
 
 ##  Backend Setup (Django + PostgreSQL)
