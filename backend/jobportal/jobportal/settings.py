@@ -79,11 +79,11 @@ WSGI_APPLICATION = 'jobportal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'jobportal',
-        'USER': 'nicholas',
-        'PASSWORD': 'Nicko.1',  # Leave blank if using peer auth
+        'NAME': '<db_name>',
+        'USER': '<use>',
+        'PASSWORD': '<db_password>',  # Leave blank if using peer auth
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '<port>',
     }
 }
 
