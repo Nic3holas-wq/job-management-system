@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../types/Job";
+import toast from "react-hot-toast";
 
 const JobDetail: React.FC = () => {
   const { id } = useParams();
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   // Time elapsed helper
 const getTimeAgo = (createdAt: string): string => {
@@ -31,11 +31,10 @@ const getTimeAgo = (createdAt: string): string => {
       .get(`http://127.0.0.1:8000/api/jobs/${id}/`)
       .then((res) => {
         setJob(res.data);
-        setError("");
       })
       .catch((err) => {
         console.error(err);
-        setError("Failed to fetch job.");
+        toast.error("Failed to fetch job details.");
       })
       .finally(() => {
         setLoading(false);
@@ -43,7 +42,6 @@ const getTimeAgo = (createdAt: string): string => {
   }, [id]);
 
   if (loading) return <p className="text-center mt-10 text-gray-600">Loading...</p>;
-  if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
   if (!job) return null;
 
   return (

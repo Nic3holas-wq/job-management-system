@@ -5,7 +5,6 @@ import CreateJob from "./pages/CreateJob";
 import EditJob from "./pages/EditJob";
 import JobDetail from "./pages/JobDetail";
 import { Toaster } from 'react-hot-toast';
-
 const App: React.FC = () => {
   return (
     <Router>

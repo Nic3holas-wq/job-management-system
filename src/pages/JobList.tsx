@@ -59,7 +59,7 @@ const JobList: React.FC = () => {
       <Navbar searchTerm={searchTerm} onSearch={setSearchTerm} />
 
       {/* 🔽 Filters */}
-      <div className="max-w-5xl mx-auto flex gap-4 mt-20 px-4">
+      <div className="max-w-5xl mx-auto flex gap-4 mt-5 px-4">
         <p className="text-gray-500">Filter by:</p>
         <select
           value={selectedLocation}
