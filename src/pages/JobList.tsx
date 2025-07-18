@@ -24,7 +24,7 @@ const JobList: React.FC = () => {
       await axios.patch(`http://127.0.0.1:8000/api/jobs/${id}/deactivate/`);
       setJobs((prev) => prev.filter((job) => job.id !== id));
       toast.success("Job deactivated successfully");
-    } catch (err) {
+    } catch {
       toast.error("Deactivation failed");
     }
   };
