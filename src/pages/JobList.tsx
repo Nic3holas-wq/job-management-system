@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import type { Job } from "../types/Job";
 import JobCard from "../components/JobCard";
-import Navbar from "../components/NavBar";
 import toast from 'react-hot-toast';
-import { Link } from "react-router-dom";
-import LogoutButton from "../components/Logout";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api"
+import SearchBar from "../components/SearchBar";
+
+// interface Props {
+//   searchTerm: string;
+//   onSearch: (value: string) => void;
+// }
 
 const JobList: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -64,17 +67,10 @@ const JobList: React.FC = () => {
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 
   return (
-    <div>
-      <header className="flex justify-between items-center mb-6">
-          <Link to='/'><h1 className="text-3xl text-blue-600 font-bold">Job Portal</h1></Link>
-          <Link to="/signup" className="border text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-lg">Sign up</Link>
-          <Link to="/signin" className="border text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-lg">Sign in</Link>
-          <LogoutButton/>
-          <Link to="/create" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            + Post Job
-          </Link>
-        </header>
-      <Navbar searchTerm={searchTerm} onSearch={setSearchTerm} />
+    <div className="mt-10">
+       <div className="max-w-5xl mx-auto">
+        <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
+      </div>
 
       {/* Filters */}
       <div className="max-w-5xl mx-auto flex gap-4 mt-5 px-4">

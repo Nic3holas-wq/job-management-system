@@ -1,18 +1,18 @@
 import React from "react";
-import SearchBar from "./SearchBar";
-
-interface Props {
-  searchTerm: string;
-  onSearch: (value: string) => void;
-}
-
-const Navbar: React.FC<Props> = ({ searchTerm, onSearch }) => {
+import { Link } from "react-router-dom";
+import LogoutButton from "./Logout";
+const Navbar: React.FC = () => {
   return (
-    <nav className="px-2 py-2 mb-4">
-      <div className="max-w-5xl mx-auto">
-        <SearchBar searchTerm={searchTerm} onSearch={onSearch} />
-      </div>
-    </nav>
+    <header className="flex justify-between items-center mb-6 fixed top-2 left-0 right-0 z-50">
+          <Link to='/'><h1 className="text-3xl text-blue-600 font-bold">Job Portal</h1></Link>
+          <div className="flex items-center gap-4">
+            <LogoutButton/>
+            <Link to="/create" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            + Post Job
+          </Link>
+          </div>
+          
+        </header>
   );
 };
 
