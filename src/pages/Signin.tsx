@@ -47,8 +47,8 @@ const Signin: React.FC = () => {
     }
 
     const data = await res.json();
-    localStorage.setItem("access", data.access);
-    localStorage.setItem("refresh", data.refresh);
+    localStorage.setItem("accessToken", data.access);
+    localStorage.setItem("refreshToken", data.refresh);
 
     setError("");
     console.log("Login successful");

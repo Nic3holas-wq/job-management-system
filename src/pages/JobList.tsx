@@ -5,7 +5,8 @@ import JobCard from "../components/JobCard";
 import Navbar from "../components/NavBar";
 import toast from 'react-hot-toast';
 import { Link } from "react-router-dom";
-
+import LogoutButton from "../components/Logout";
+import { useNavigate } from "react-router-dom";
 const JobList: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,16 +14,32 @@ const JobList: React.FC = () => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 10;
+  const navigate = useNavigate();
+  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/jobs/")
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
+   axios.get("http://127.0.0.1:8000/api/jobs/", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    } 
+  })
       .then((res) => setJobs(res.data))
       .catch(() => toast.error("Failed to fetch jobs"));
-  }, []);
+  }, [token]);
 
   const handleDeactivate = async (id: number) => {
     try {
-      await axios.patch(`http://127.0.0.1:8000/api/jobs/${id}/deactivate/`);
+      await axios.patch(`http://127.0.0.1:8000/api/jobs/${id}/deactivate/`,
+        {
+          headers: {
+          Authorization: `Bearer ${token}`
+    } 
+        }
+      );
       setJobs((prev) => prev.filter((job) => job.id !== id));
       toast.success("Job deactivated successfully");
     } catch {
@@ -61,6 +78,7 @@ const JobList: React.FC = () => {
           <Link to='/'><h1 className="text-3xl text-blue-600 font-bold">Job Portal</h1></Link>
           <Link to="/signup" className="border text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-lg">Sign up</Link>
           <Link to="/signin" className="border text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-lg">Sign in</Link>
+          <LogoutButton/>
           <Link to="/create" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
             + Post Job
           </Link>
