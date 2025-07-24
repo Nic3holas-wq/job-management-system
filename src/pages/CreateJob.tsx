@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
+import api from "../utils/api"
 
 const CreateJob: React.FC = () => {
   const [form, setForm] = useState({
@@ -13,7 +13,6 @@ const CreateJob: React.FC = () => {
   });
 
   const navigate = useNavigate();
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -22,7 +21,7 @@ const CreateJob: React.FC = () => {
     e.preventDefault();
 
     try {
-      await axios.post("http://127.0.0.1:8000/api/jobs/", {
+      await api.post("http://127.0.0.1:8000/api/jobs/", {
         ...form,
         salary: parseInt(form.salary),
         status: "active",

@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 const EditJob: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("accessToken");
   const [form, setForm] = useState<Omit<Job, "id" | "created_at" | "updated_at" | "status">>({
     title: "",
     description: "",
@@ -18,7 +18,13 @@ const EditJob: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/jobs/${id}/`)
+      .get(`http://127.0.0.1:8000/api/jobs/${id}/`,
+        {
+          headers: {
+           Authorization: `Bearer ${token}`
+          } 
+        }
+      )
       .then((res) => {
         const data = res.data;
         setForm({
@@ -46,6 +52,9 @@ const EditJob: React.FC = () => {
 
     try {
       await axios.put(`http://127.0.0.1:8000/api/jobs/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        } ,
         ...form,
         salary: parseInt(form.salary.toString()),
       });

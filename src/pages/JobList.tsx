@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import type { Job } from "../types/Job";
 import JobCard from "../components/JobCard";
 import Navbar from "../components/NavBar";
 import toast from 'react-hot-toast';
+import { Link } from "react-router-dom";
+import LogoutButton from "../components/Logout";
+import { useNavigate } from "react-router-dom";
+import api from "../utils/api"
 
 const JobList: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -12,16 +15,22 @@ const JobList: React.FC = () => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 10;
+  const navigate = useNavigate();
+  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/jobs/")
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
+   api.get("jobs/")
       .then((res) => setJobs(res.data))
       .catch(() => toast.error("Failed to fetch jobs"));
-  }, []);
+  }, [token]);
 
   const handleDeactivate = async (id: number) => {
     try {
-      await axios.patch(`http://127.0.0.1:8000/api/jobs/${id}/deactivate/`);
+      await api.patch(`jobs/${id}/deactivate/`);
       setJobs((prev) => prev.filter((job) => job.id !== id));
       toast.success("Job deactivated successfully");
     } catch {
@@ -56,9 +65,18 @@ const JobList: React.FC = () => {
 
   return (
     <div>
+      <header className="flex justify-between items-center mb-6">
+          <Link to='/'><h1 className="text-3xl text-blue-600 font-bold">Job Portal</h1></Link>
+          <Link to="/signup" className="border text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-lg">Sign up</Link>
+          <Link to="/signin" className="border text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-lg">Sign in</Link>
+          <LogoutButton/>
+          <Link to="/create" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            + Post Job
+          </Link>
+        </header>
       <Navbar searchTerm={searchTerm} onSearch={setSearchTerm} />
 
-      {/* 🔽 Filters */}
+      {/* Filters */}
       <div className="max-w-5xl mx-auto flex gap-4 mt-5 px-4">
         <p className="text-gray-500">Filter by:</p>
         <select

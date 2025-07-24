@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 interface FormData {
-  name: string;
   email: string;
   password: string;
-  confirmpassword: string;
 }
 
-const Signup: React.FC = () => {
+const Signin: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    name: "",
     email: "",
     password: "",
-    confirmpassword: ""
   });
   const navigate = useNavigate();
+
   const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,41 +22,42 @@ const Signup: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
-  const { name, email, password, confirmpassword } = formData;
+  const { email, password } = formData;
 
-  if (!name || !email || !password || !confirmpassword) {
+  if (!email || !password) {
     setError("All fields are required.");
     return;
   }
 
-  if (password !== confirmpassword) {
-    setError("Passwords do not match.");
-    return;
-  }
-
   try {
-    const res = await fetch("http://localhost:8000/api/register/", {
+    const res = await fetch("http://localhost:8000/api/token/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ 
+        username: email, 
+        password: password,
+      }),
     });
 
-    const data = await res.json();
-
     if (!res.ok) {
-      setError(data.detail || "Something went wrong.");
-    } else {
-      alert("Account created successfully!");
-      // Optionally reset form or navigate to login
-      navigate("/signin");
+      const data = await res.json();
+      throw new Error(data.detail || "Login failed");
     }
-  } catch {
-    setError("Failed to connect to the server.");
+
+    const data = await res.json();
+    localStorage.setItem("accessToken", data.access);
+    localStorage.setItem("refreshToken", data.refresh);
+
+    setError("");
+    console.log("Login successful");
+    // redirect or navigate to dashboard here
+    navigate("/");
+  } catch  {
+    setError("Failed to login. Please check your credentials.");
   }
 };
-
 
 
   return (
@@ -67,26 +66,12 @@ const Signup: React.FC = () => {
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md"
       >
-        <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">Sign Up</h2>
+        <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">Sign in</h2>
 
         {error && (
           <div className="bg-red-100 text-red-700 text-sm p-2 rounded mb-4">{error}</div>
         )}
 
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-blue-700 mb-1" htmlFor="name">
-            Name
-          </label>
-          <input
-            className="w-full border border-blue-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            type="text"
-            name="name"
-            id="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter your name"
-          />
-        </div>
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-blue-700 mb-1" htmlFor="email">
@@ -118,34 +103,19 @@ const Signup: React.FC = () => {
           />
         </div>
 
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-blue-700 mb-1" htmlFor="confirmpassword">
-            Confirm Password
-          </label>
-          <input
-            className="w-full border border-blue-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            type="password"
-            name="confirmpassword"
-            id="confirmpassword"
-            value={formData.confirmpassword}
-            onChange={handleChange}
-            placeholder="Confirm your password"
-          />
-        </div>
-
         <button
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
         >
-          Create Account
+          Sign In
         </button>
 
         <p className="text-center text-sm text-gray-600 mt-4">
-          Already have an account? <a href="/signin" className="text-blue-600 hover:underline">Sign In</a>
+          Don't have an account? <a href="/signup" className="text-blue-600 hover:underline">Sign Up</a>
         </p>
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default Signin;

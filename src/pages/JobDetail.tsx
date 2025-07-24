@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
 import type { Job } from "../types/Job";
 import toast from "react-hot-toast";
+import api from "../utils/api";
 
 const JobDetail: React.FC = () => {
   const { id } = useParams();
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
+  
 
   // Time elapsed helper
 const getTimeAgo = (createdAt: string): string => {
@@ -27,8 +28,8 @@ const getTimeAgo = (createdAt: string): string => {
   };
   
   useEffect(() => {
-    axios
-      .get(`http://127.0.0.1:8000/api/jobs/${id}/`)
+    api
+      .get(`jobs/${id}/`)
       .then((res) => {
         setJob(res.data);
       })
