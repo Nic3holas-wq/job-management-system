@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import type { Job } from "../types/Job";
 import JobCard from "../components/JobCard";
 import Navbar from "../components/NavBar";
@@ -7,6 +6,8 @@ import toast from 'react-hot-toast';
 import { Link } from "react-router-dom";
 import LogoutButton from "../components/Logout";
 import { useNavigate } from "react-router-dom";
+import api from "../utils/api"
+
 const JobList: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,24 +23,14 @@ const JobList: React.FC = () => {
       navigate("/signin");
       return;
     }
-   axios.get("http://127.0.0.1:8000/api/jobs/", {
-    headers: {
-      Authorization: `Bearer ${token}`
-    } 
-  })
+   api.get("jobs/")
       .then((res) => setJobs(res.data))
       .catch(() => toast.error("Failed to fetch jobs"));
   }, [token]);
 
   const handleDeactivate = async (id: number) => {
     try {
-      await axios.patch(`http://127.0.0.1:8000/api/jobs/${id}/deactivate/`,
-        {
-          headers: {
-          Authorization: `Bearer ${token}`
-    } 
-        }
-      );
+      await api.patch(`jobs/${id}/deactivate/`);
       setJobs((prev) => prev.filter((job) => job.id !== id));
       toast.success("Job deactivated successfully");
     } catch {
