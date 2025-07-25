@@ -1,10 +1,20 @@
 from rest_framework import viewsets, status
-from rest_framework.decorators import action, api_view
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.hashers import make_password
 from .models import Job
 from .serializers import JobSerializer
+from .serializers import UserSerializer
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_profile(request):
+    user = request.user
+    serializer = UserSerializer(user)
+    return Response(serializer.data)
+
 
 # ✅ Class-based view for Jobs
 class JobViewSet(viewsets.ModelViewSet):

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 interface FormData {
   name: string;
@@ -51,7 +52,7 @@ const Signup: React.FC = () => {
       setError(data.detail || "Something went wrong.");
     } else {
       alert("Account created successfully!");
-      // Optionally reset form or navigate to login
+      toast.success("Account created successfully!");
       navigate("/signin");
     }
   } catch {

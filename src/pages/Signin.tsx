@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 interface FormData {
@@ -53,6 +54,7 @@ const Signin: React.FC = () => {
     setError("");
     console.log("Login successful");
     // redirect or navigate to dashboard here
+    toast.success("Login successful!");
     navigate("/");
   } catch  {
     setError("Failed to login. Please check your credentials.");

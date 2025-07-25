@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast';
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Navbar from "./components/NavBar";
+import UserAccount from "./pages/UserAccount";
 
 const AppContent: React.FC = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const AppContent: React.FC = () => {
         <Route path="/job/:id" element={<JobDetail />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/account" element={<UserAccount />} />
       </Routes>
       <Toaster position="top-right" />
     </div>
