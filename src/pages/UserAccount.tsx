@@ -36,7 +36,7 @@ const UserAccount: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6">
-      <h2 className="text-xl font-bold mb-2">{user.first_name} {user.last_name}</h2>
+      <h2 className="text-xl font-bold mb-2">{user.first_name}</h2>
       <p className="text-gray-600 mb-1">@{user.username}</p>
       <p className="text-gray-600">{user.email}</p>
     </div>
