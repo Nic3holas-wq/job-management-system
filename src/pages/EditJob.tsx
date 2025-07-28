@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import type { Job } from "../types/Job";
 import toast from "react-hot-toast";
+import api from "../utils/api";
 
 const EditJob: React.FC = () => {
   const { id } = useParams();
@@ -21,13 +21,8 @@ const EditJob: React.FC = () => {
       navigate("/signin");
       return;
     }
-    axios
-      .get(`http://127.0.0.1:8000/api/jobs/${id}/`,
-        {
-          headers: {
-           Authorization: `Bearer ${token}`
-          } 
-        }
+    api
+      .get(`jobs/${id}/`
       )
       .then((res) => {
         const data = res.data;
@@ -55,10 +50,7 @@ const EditJob: React.FC = () => {
     e.preventDefault();
 
     try {
-      await axios.put(`http://127.0.0.1:8000/api/jobs/${id}/`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        } ,
+      await api.put(`jobs/${id}/`, {
         ...form,
         salary: parseInt(form.salary.toString()),
       });
