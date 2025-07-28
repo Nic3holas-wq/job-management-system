@@ -68,12 +68,12 @@ const Signin: React.FC = () => {
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md"
       >
-        <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">Sign in</h2>
+        <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">Welcome back,</h2>
+        <p className="text-gray-400">Enter your credentials to sign in</p>
 
         {error && (
-          <div className="bg-red-100 text-red-700 text-sm p-2 rounded mb-4">{error}</div>
+          <div className="bg-red-100 text-red-700 text-sm p-2 rounded mb-4 mt-3">{error}</div>
         )}
-
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-blue-700 mb-1" htmlFor="email">
