@@ -26,7 +26,7 @@ const CreateJob: React.FC = () => {
     e.preventDefault();
 
     try {
-      await api.post("http://127.0.0.1:8000/api/jobs/", {
+      await api.post("jobs/", {
         ...form,
         salary: parseInt(form.salary),
         status: "active",
