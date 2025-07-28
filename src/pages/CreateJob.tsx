@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import api from "../utils/api"
@@ -16,7 +16,12 @@ const CreateJob: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
+  const token = localStorage.getItem("accessToken");
+  useEffect(() => {
+    if (!token) {
+      navigate("/signin");
+    }
+  }, [token])
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 

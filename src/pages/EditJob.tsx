@@ -17,6 +17,10 @@ const EditJob: React.FC = () => {
   });
 
   useEffect(() => {
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
     axios
       .get(`http://127.0.0.1:8000/api/jobs/${id}/`,
         {

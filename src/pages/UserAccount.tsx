@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../utils/api";
-
+import { useNavigate } from "react-router-dom";
 interface User {
   id: number;
   username: string;
@@ -12,11 +12,14 @@ interface User {
 const UserAccount: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("accessToken");
-      if (!token) return;
+      if (!token){
+        navigate("/signin");
+        return;
+      };
 
       try {
         const response = await api.get("user/");

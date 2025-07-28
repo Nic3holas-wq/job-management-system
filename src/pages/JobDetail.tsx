@@ -3,11 +3,14 @@ import { useParams, Link } from "react-router-dom";
 import type { Job } from "../types/Job";
 import toast from "react-hot-toast";
 import api from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const JobDetail: React.FC = () => {
   const { id } = useParams();
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("accessToken");
   
 
   // Time elapsed helper
@@ -28,6 +31,10 @@ const getTimeAgo = (createdAt: string): string => {
   };
   
   useEffect(() => {
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
     api
       .get(`jobs/${id}/`)
       .then((res) => {
