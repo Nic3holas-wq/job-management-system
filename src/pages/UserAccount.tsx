@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../utils/api";
 import { useNavigate } from "react-router-dom";
+import { UserCircle } from "lucide-react";
 interface User {
   id: number;
   username: string;
@@ -39,7 +40,11 @@ const UserAccount: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6">
-      <h2 className="text-xl font-bold mb-2">{user.first_name}</h2>
+      <div className="flex flex-row  mb-6">
+        <UserCircle className="w-16 font-light h-16 text-blue-600 mx-auto mb-4" />
+        <h2 className="text-xl font-bold mb-2">{user.first_name}</h2>
+      </div>
+      
       <p className="text-gray-600 mb-1">@{user.username}</p>
       <p className="text-gray-600">{user.email}</p>
     </div>
