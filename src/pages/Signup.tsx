@@ -68,10 +68,11 @@ const Signup: React.FC = () => {
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md"
       >
-        <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">Sign Up</h2>
+        <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">Create Your Account</h2>
+        <p className="text-gray-400">Sign up now to create, manage, and track your jobs like a pro.</p>
 
         {error && (
-          <div className="bg-red-100 text-red-700 text-sm p-2 rounded mb-4">{error}</div>
+          <div className="bg-red-100 text-red-700 text-sm p-2 rounded mb-4 mt-3">{error}</div>
         )}
 
         <div className="mb-4">
