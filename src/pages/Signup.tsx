@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 interface FormData {
   name: string;
   email: string;
@@ -15,8 +15,11 @@ const Signup: React.FC = () => {
     password: "",
     confirmpassword: ""
   });
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [loadingVerification, setLoadingVerification] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,6 +41,7 @@ const Signup: React.FC = () => {
   }
 
   try {
+    setLoading(true);
     const res = await fetch("http://localhost:8000/api/register/", {
       method: "POST",
       headers: {
@@ -45,21 +49,29 @@ const Signup: React.FC = () => {
       },
       body: JSON.stringify({ name, email, password }),
     });
-
+    
     const data = await res.json();
 
     if (!res.ok) {
       setError(data.detail || "Something went wrong.");
     } else {
-      alert("Account created successfully!");
-      toast.success("Account created successfully!");
-      navigate("/signin");
+      setError("");
+      setLoading(false);
+      toast.success("Please check your email to verify your account.");
+      setSuccess("Registration successful! Please check your email to verify your account.");
+      setLoadingVerification(true);
     }
   } catch {
     setError("Failed to connect to the server.");
   }
 };
 
+// Function to get button text based on state
+const getButtonText = () => {
+  if (loading) return "Please wait...";
+  if (loadingVerification) return "Waiting for verification...";
+  return "Create Account";
+};
 
 
   return (
@@ -73,6 +85,9 @@ const Signup: React.FC = () => {
 
         {error && (
           <div className="bg-red-100 text-red-700 text-sm p-2 rounded mb-4 mt-3">{error}</div>
+        )}
+        {success && (
+          <div className="bg-green-100 text-green-700 text-sm p-2 rounded mb-4 mt-3">{success}</div>
         )}
 
         <div className="mb-4">
@@ -139,7 +154,7 @@ const Signup: React.FC = () => {
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
         >
-          Create Account
+          {getButtonText()}
         </button>
 
         <p className="text-center text-sm text-gray-600 mt-4">
