@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Activate Your Account</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+  <div style="max-width: 600px; margin: auto; background-color: white; padding: 30px; border-radius: 8px;">
+    <h2 style="color: #333;">Welcome to JobPortal platform</h2>
+    <p>Hi there,</p>
+    <p>Thank you for signing up! Please click the button below to activate your account:</p>
+
+    <p style="text-align: center;">
+      <a href="{{ activation_link }}" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px;">Activate My Account</a>
+    </p>
+
+    <p>If the button doesn't work, copy and paste the link below into your browser:</p>
+    <p style="word-break: break-all;"><a href="{{ activation_link }}">{{ activation_link }}</a></p>
+
+    <p style="color: #999;">If you didn’t create an account, you can safely ignore this email.</p>
+    <p>Best regards,<br>JobPortal Team</p>
+  </div>
+</body>
+</html>

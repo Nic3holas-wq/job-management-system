@@ -9,6 +9,13 @@ class JobSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(source='profile.image', read_only=True)
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'image']
+        
+    def get_profile_picture(self, obj):
+        request = self.context.get('request')
+        if hasattr(obj, 'profile') and obj.profile.image:
+            return request.build_absolute_uri(obj.profile.image.url)
+        return None
