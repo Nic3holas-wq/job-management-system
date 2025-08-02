@@ -15,6 +15,7 @@ const Signin: React.FC = () => {
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,6 +32,7 @@ const Signin: React.FC = () => {
   }
 
   try {
+    setLoading(true);
     const res = await fetch("http://localhost:8000/api/token/", {
       method: "POST",
       headers: {
@@ -41,6 +43,7 @@ const Signin: React.FC = () => {
         password: password,
       }),
     });
+    
 
     if (!res.ok) {
       const data = await res.json();
@@ -53,6 +56,8 @@ const Signin: React.FC = () => {
 
     setError("");
     console.log("Login successful");
+    setLoading(false);
+    setError("");
     // redirect or navigate to dashboard here
     toast.success("Login successful!");
     navigate("/");
@@ -109,7 +114,7 @@ const Signin: React.FC = () => {
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
         >
-          Sign In
+          {loading ? "Please wait..." : "Sign In"}
         </button>
 
         <p className="text-center text-sm text-gray-600 mt-4">
