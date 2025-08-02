@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: jobportal
+      POSTGRES_USER: nicholas
+      POSTGRES_PASSWORD: Nicko.1
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432"
+
+  web:
+    build: .
+    container_name: django-app
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/main
+      - ./media:/main/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_NAME: jobportal
+      DB_USER: nicholas
+      DB_PASSWORD: Nicko.1
+      DB_HOST: db
+      DB_PORT: 5432
+
+volumes:
+  postgres_data:
+  media:
