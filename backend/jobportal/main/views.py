@@ -1,12 +1,11 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from django.contrib.auth.hashers import make_password
-from .models import Job
-from .serializers import JobSerializer
-from .serializers import UserSerializer
+from .models import Job, JobApplication
+from .serializers import JobSerializer, JobApplicationSerializer, UserSerializer
 from .models import Profile
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
@@ -27,6 +26,7 @@ from django.utils.encoding import force_bytes
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 import base64
+
 
 # ✅ Function-based view for user profile
 @api_view(['GET'])
@@ -73,7 +73,7 @@ def register_user(request):
         signed_data = signer.sign(payload)
         encoded_data = base64.urlsafe_b64encode(signed_data.encode()).decode()
 
-        activation_link = f"http://localhost:8000/api/activate/{encoded_data}/"
+        activation_link = f"http://192.168.43.102:8000/api/activate/{encoded_data}/"
 
 
         # Send activation email
@@ -145,7 +145,7 @@ def activate_user(request, token):
         Profile.objects.create(user=user)
 
         # Redirect to frontend (optional)
-        return redirect("http://localhost:5173/signin?verified=true")
+        return redirect("http://192.168.43.102:5173/signin?verified=true")
 
     except SignatureExpired:
         return Response({'detail': 'Activation link has expired.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -154,3 +154,25 @@ def activate_user(request, token):
     except Exception as e:
         return Response({'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+class JobApplicationCreateView(generics.CreateAPIView):
+    queryset = JobApplication.objects.all()
+    serializer_class = JobApplicationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=self.request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print("Serializer errors:", serializer.errors)  # 🔍 Log errors
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+# Function to get applications by user email
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_my_applications(request):
+    user = request.user
+    applications = JobApplication.objects.filter(user=user)
+    serializer = JobApplicationSerializer(applications, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
