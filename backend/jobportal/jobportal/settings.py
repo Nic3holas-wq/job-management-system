@@ -111,6 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # or wherever your React frontend is running
+    "http://192.168.43.102:5173",
 ]
 
 # Internationalization

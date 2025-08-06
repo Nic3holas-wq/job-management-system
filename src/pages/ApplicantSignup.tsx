@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 //import { useNavigate } from "react-router-dom";
 import { URL } from "../utils/api";
-import { Link } from "react-router-dom";
 interface FormData {
   name: string;
   email: string;
@@ -10,7 +9,7 @@ interface FormData {
   confirmpassword: string;
 }
 
-const Signup: React.FC = () => {
+const ApplicantSignup: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -43,14 +42,14 @@ const Signup: React.FC = () => {
   }
 
   try {
-    const role = "admin";
+    const role = "applicant"; // Set role to applicant
     setLoading(true);
     const res = await fetch(`${URL}api/register/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password, role }),
+      body: JSON.stringify({ name, email, password , role}),
     });
     
     const data = await res.json();
@@ -83,11 +82,8 @@ const getButtonText = () => {
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md"
       >
-        <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">Create Your Account</h2>
-        <Link to="/applicantlogin" className="bg-blue-600 text-white px-4 py-1 rounded">
-          Continue as a Job Seeker
-        </Link>
-        <p className="text-gray-400">Sign up now to create, manage, and track your jobs like a pro.</p>
+        <h2 className="text-2xl font-bold text-green-600 mb-6 text-center">Start a Free Trial Account</h2>
+        <p className="text-gray-400">Create an account and view job postings</p>
 
         {error && (
           <div className="bg-red-100 text-red-700 text-sm p-2 rounded mb-4 mt-3">{error}</div>
@@ -97,11 +93,11 @@ const getButtonText = () => {
         )}
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-blue-700 mb-1" htmlFor="name">
+          <label className="block text-sm font-medium text-green-700 mb-1" htmlFor="name">
             Name
           </label>
           <input
-            className="w-full border border-blue-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-green-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             type="text"
             name="name"
             id="name"
@@ -112,11 +108,11 @@ const getButtonText = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-blue-700 mb-1" htmlFor="email">
+          <label className="block text-sm font-medium text-green-700 mb-1" htmlFor="email">
             Email
           </label>
           <input
-            className="w-full border border-blue-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-green-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             type="email"
             name="email"
             id="email"
@@ -127,11 +123,11 @@ const getButtonText = () => {
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium text-blue-700 mb-1" htmlFor="password">
+          <label className="block text-sm font-medium text-green-700 mb-1" htmlFor="password">
             Password
           </label>
           <input
-            className="w-full border border-blue-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-green-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             type="password"
             name="password"
             id="password"
@@ -142,11 +138,11 @@ const getButtonText = () => {
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium text-blue-700 mb-1" htmlFor="confirmpassword">
+          <label className="block text-sm font-medium text-green-700 mb-1" htmlFor="confirmpassword">
             Confirm Password
           </label>
           <input
-            className="w-full border border-blue-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-green-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             type="password"
             name="confirmpassword"
             id="confirmpassword"
@@ -158,17 +154,17 @@ const getButtonText = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+          className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition"
         >
           {getButtonText()}
         </button>
 
         <p className="text-center text-sm text-gray-600 mt-4">
-          Already have an account? <a href="/signin" className="text-blue-600 hover:underline">Sign In</a>
+          Already have an account? <a href="/applicantlogin" className="text-green-600 hover:underline">Sign In</a>
         </p>
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default ApplicantSignup;
