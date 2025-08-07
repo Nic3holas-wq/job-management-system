@@ -4,6 +4,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
     JobViewSet,
+    JobListViewSet,
     register_user,
     get_user_profile,
     upload_profile_picture,
@@ -14,6 +15,8 @@ from .views import (
 
 router = DefaultRouter()
 router.register('jobs', JobViewSet, basename='job')
+router.register('all-jobs', JobListViewSet, basename='all-job')
+
 
 urlpatterns = [
     path('', include(router.urls)),

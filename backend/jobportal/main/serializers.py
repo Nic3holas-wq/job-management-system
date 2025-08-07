@@ -3,11 +3,26 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Job, JobApplication
 
+class JobOwnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
 class JobSerializer(serializers.ModelSerializer):
+    job_owner = JobOwnerSerializer(read_only=True)  # show full owner info
+    job_owner_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(),
+        source='job_owner',
+        write_only=True,
+        required=False  # not required, we'll assign it from request
+    )
+
     class Meta:
         model = Job
-        fields = '__all__'
+        fields = '__all__'  # includes both job_owner and job_owner_id
 
+
+
+        
 class UserSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(source='profile.image', read_only=True)
     class Meta:

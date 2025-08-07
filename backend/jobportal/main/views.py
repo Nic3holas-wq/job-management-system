@@ -37,8 +37,8 @@ def get_user_profile(request):
     return Response(serializer.data)
 
 
-# ✅ Class-based view for Jobs
-class JobViewSet(viewsets.ModelViewSet):
+# ✅ Class-based view for job seeker job listings
+class JobListViewSet(viewsets.ModelViewSet):
     queryset = Job.objects.filter(status='active')
     serializer_class = JobSerializer
 
@@ -51,6 +51,32 @@ class JobViewSet(viewsets.ModelViewSet):
             return Response({'status': 'Job deactivated successfully'})
         except Job.DoesNotExist:
             return Response({'error': 'Job not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    def perform_create(self, serializer):
+        serializer.save(job_owner=self.request.user)
+
+# ✅ Class-based view for job owner job listings
+class JobViewSet(viewsets.ModelViewSet):
+    serializer_class = JobSerializer
+    permission_classes = [IsAuthenticated]  # Ensure only logged-in users can access
+
+    def get_queryset(self):
+        # Return only jobs owned by the logged-in user and that are active
+        return Job.objects.filter(job_owner=self.request.user, status='active')
+
+    @action(detail=True, methods=['patch'], url_path='deactivate')
+    def deactivate(self, request, pk=None):
+        try:
+            job = self.get_object()
+            job.status = 'inactive'
+            job.save()
+            return Response({'status': 'Job deactivated successfully'})
+        except Job.DoesNotExist:
+            return Response({'error': 'Job not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def perform_create(self, serializer):
+        serializer.save(job_owner=self.request.user)
+        
 
 # ✅ Standalone function-based view for user registration
 signer = TimestampSigner()

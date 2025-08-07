@@ -33,7 +33,7 @@ const JobDetail: React.FC = () => {
       return;
     }
     api
-      .get(`jobs/${id}/`)
+      .get(`all-jobs/${id}/`)
       .then((res) => setJob(res.data))
       .catch((err) => {
         console.error(err);
@@ -51,7 +51,7 @@ const JobDetail: React.FC = () => {
 
     try {
       const formData = new FormData();
-      formData.append("job", String(job.id));
+      formData.append("job_id", String(job.id));
       formData.append("cover_letter", coverLetter);
       formData.append("resume", cv);
 

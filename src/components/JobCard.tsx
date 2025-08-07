@@ -7,6 +7,7 @@ interface Props {
   onDeactivate: (id: number) => void;
 }
 
+
 // Time elapsed helper
 const getTimeAgo = (createdAt: string): string => {
   const postedDate = new Date(createdAt);
@@ -43,6 +44,7 @@ const JobCard: React.FC<Props> = ({ job, onDeactivate }) => {
         <p><strong>Company:</strong> {job.company_name}</p>
         <p><strong>Location:</strong> {job.location}</p>
         <p><strong>Salary:</strong> KES {job.salary}</p>
+        <p><strong>Job Owner:</strong>{job.job_owner.email}</p>
         
       </div>
       <div className="mt-4 flex gap-3">

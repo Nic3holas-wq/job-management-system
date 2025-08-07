@@ -70,7 +70,7 @@ const ApplicantProfile: React.FC = () => {
           <img src={user.image} alt="Profile" className="w-24 h-24 rounded-full object-cover mb-2" />
           //<p>URL: {user.image}</p>
         ) : (
-          <UserCircle className="w-24 h-24 text-blue-600 mb-2" />
+          <UserCircle className="w-24 h-24 text-green-600 mb-2" />
         )}
         <h2 className="text-xl font-bold">{user.first_name}</h2>
       </div>

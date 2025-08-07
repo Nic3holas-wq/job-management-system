@@ -26,7 +26,7 @@ const ApplicantDashboard: React.FC = () => {
       navigate("/signin");
       return;
     }
-   api.get("jobs/")
+   api.get("all-jobs/")
       .then((res) => setJobs(res.data))
       .catch(() => toast.error("Failed to fetch jobs"));
   }, [token]);

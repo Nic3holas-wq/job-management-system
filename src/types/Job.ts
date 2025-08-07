@@ -1,3 +1,8 @@
+interface JobOwner{
+  id: number;
+  username: string;
+  email: string;
+}
 export interface Job {
     id: number;
     title: string;
@@ -8,5 +13,6 @@ export interface Job {
     status: "active" | "inactive";
     created_at: string;
     updated_at: string;
+    job_owner: JobOwner; 
   }
   

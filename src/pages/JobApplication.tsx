@@ -53,9 +53,11 @@ const JobApplication: React.FC = () => {
             {applications.length === 0 ? (
                 <>
                 <p className="text-gray-500">No applications found.</p>
-                <Link to="/applicantdashboard" className='bg-green-600 text-white py-2 px-4'>
+                <button className='bg-green-600 text-white py-2 px-4 text-center rounded-lg hover:bg-green-700 mt-5 transition'>
+                <Link to="/applicantdashboard" >
                     See Jobs
                 </Link>
+                </button>
                 </>
                 ) : (
           <table className="min-w-full table-auto border border-gray-50">
