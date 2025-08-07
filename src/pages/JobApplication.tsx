@@ -32,7 +32,7 @@ const JobApplication: React.FC = () => {
     const fetchApplications = async () => {
       try {
         //const token = localStorage.getItem('token'); // Ensure you send this in headers in your api.ts
-        const response = await api.get<JobApplication[]>('applications/');
+        const response = await api.get<JobApplication[]>('my-applications/');
 
         setApplications(response.data);
         //console.log('Applications fetched successfully:', response.data);

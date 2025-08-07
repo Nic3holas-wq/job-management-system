@@ -10,7 +10,9 @@ from .views import (
     upload_profile_picture,
     activate_user,
     get_my_applications,
-    JobApplicationCreateView
+    get_job_applications,
+    JobApplicationCreateView,
+    UpdateApplicationStatus
 )
 
 router = DefaultRouter()
@@ -29,5 +31,8 @@ urlpatterns = [
 
     # Job application endpoints
     path('apply/', JobApplicationCreateView.as_view(), name='job-apply'),
-    path('applications/', get_my_applications),
+    path('my-applications/', get_my_applications),
+    path('job-applications/', get_job_applications),
+    path('update-application/<int:pk>/update-status/', UpdateApplicationStatus.as_view(), name='update-status'),
+
 ]

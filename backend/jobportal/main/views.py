@@ -26,6 +26,7 @@ from django.utils.encoding import force_bytes
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 import base64
+from rest_framework.views import APIView
 
 
 # ✅ Function-based view for user profile
@@ -202,3 +203,37 @@ def get_my_applications(request):
     applications = JobApplication.objects.filter(user=user)
     serializer = JobApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+#Get job applications owned by job creator
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_job_applications(request):
+    user = request.user
+    # Get all jobs posted by the current user
+    user_jobs = Job.objects.filter(job_owner=user)
+    
+    # Get applications where job is one of the user's jobs
+    applications = JobApplication.objects.filter(job__in=user_jobs)
+
+    serializer = JobApplicationSerializer(applications, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+# Update job application status
+class UpdateApplicationStatus(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, pk):
+        try:
+            job_app = JobApplication.objects.get(pk=pk)
+        except JobApplication.DoesNotExist:
+            return Response({"error": "Job Application not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        new_status = request.data.get('status')
+        print("New status received:", new_status)
+        if new_status not in dict(JobApplication.STATUS_CHOICES):
+            return Response({"error": "Invalid status."}, status=status.HTTP_400_BAD_REQUEST)
+
+        job_app.status = new_status
+        job_app.save()
+        serializer = JobApplicationSerializer(job_app)
+        return Response(serializer.data, status=status.HTTP_200_OK)
