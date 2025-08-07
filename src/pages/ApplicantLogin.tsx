@@ -75,7 +75,7 @@ const ApplicantLogin: React.FC = () => {
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md"
       >
         <h2 className="text-2xl font-bold text-green-700 mb-6 text-center">Welcome back,</h2>
-        <p className="text-gray-400">Continue exploring opportunities</p>
+        <p className="text-gray-400">Continue exploring job opportunities</p>
 
         {error && (
           <div className="bg-red-100 text-red-700 text-sm p-2 rounded mb-4 mt-3">{error}</div>

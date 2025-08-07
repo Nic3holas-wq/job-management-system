@@ -75,9 +75,7 @@ const Signin: React.FC = () => {
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md"
       >
         <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">Welcome back,</h2>
-        <Link to="/applicantlogin" className="bg-blue-600 text-white px-4 py-1 rounded">
-        Continue as a Job Seeker
-        </Link>
+        
         <p className="text-gray-400">Enter your credentials to sign in</p>
 
         {error && (
@@ -116,10 +114,13 @@ const Signin: React.FC = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 mb-8 rounded-lg transition"
         >
           {loading ? "Please wait..." : "Sign In"}
         </button>
+        <Link to="/applicantlogin" className="bg-green-600 text-white px-4 py-2 py-1 rounded">
+        Continue as a Job Seeker
+        </Link>
 
         <p className="text-center text-sm text-gray-600 mt-4">
           Don't have an account? <a href="/signup" className="text-blue-600 hover:underline">Sign Up</a>
