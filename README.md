@@ -1,18 +1,27 @@
 #  Job Management Web Application
 
-A full-stack **Job Management Web App** that allows users to create, view, update, and soft-delete job listings. It uses a Django + DRF backend, PostgreSQL for data storage, and a modern React + TypeScript + Tailwind CSS frontend.
+A full-stack **Job Management Web App** that  enables job seekers to browse and apply for positions, track application statuses, and manage resumes/cover letters, while allowing recruiters to post jobs, review applicants, and update application statuses — streamlining the recruitment process and improving user engagement. It uses a Django + DRF backend, PostgreSQL for data storage, and a modern React + TypeScript + Tailwind CSS frontend.
 
 ---
 ### Project Screenshots
 
 <div style="display: flex; gap: 10px;">
-  <img src="./screenshots/homepage.png" alt="Home Page" width="250"/>
-  <img src="./screenshots/homepage2.png" alt="Job Form" width="250"/>
-  <img src="./screenshots/createjob.png" alt="Job List" width="250"/>
-  <img src="./screenshots/editjob.png" alt="Job List" width="250"/>
-  <img src="./screenshots/jobdetail.png" alt="Job List" width="250"/>
-  <img src="./screenshots/pagination.png" alt="Job List" width="250"/>
-  <img src="./screenshots/edittoast.png" alt="Job List" width="250"/>
+  <img src="./screenshots/1.png" alt="Home Page" width="250"/>
+   <img src="./screenshots/2.png" alt="Home Page" width="250"/>
+    <img src="./screenshots/3.png" alt="Home Page" width="250"/>
+     <img src="./screenshots/4.png" alt="Home Page" width="250"/>
+      <img src="./screenshots/5.png" alt="Home Page" width="250"/>
+       <img src="./screenshots/6.png" alt="Home Page" width="250"/>
+        <img src="./screenshots/7.png" alt="Home Page" width="250"/>
+         <img src="./screenshots/8.png" alt="Home Page" width="250"/>
+          <img src="./screenshots/9.png" alt="Home Page" width="250"/>
+           <img src="./screenshots/10.png" alt="Home Page" width="250"/>
+            <img src="./screenshots/11.png" alt="Home Page" width="250"/>
+             <img src="./screenshots/12.png" alt="Home Page" width="250"/>
+              <img src="./screenshots/13.png" alt="Home Page" width="250"/>
+               <img src="./screenshots/14.png" alt="Home Page" width="250"/>
+                <img src="./screenshots/15.png" alt="Home Page" width="250"/>
+ 
 </div>
 
 
@@ -22,6 +31,7 @@ A full-stack **Job Management Web App** that allows users to create, view, updat
 - Django
 - Django REST Framework
 - PostgreSQL
+- Docker
 
 **Frontend**
 - React
@@ -36,9 +46,9 @@ A full-stack **Job Management Web App** that allows users to create, view, updat
 -  Create, update, view job listings
 -  Soft-delete jobs (mark as inactive)
 -  Filter jobs by company and location
--  Search jobs by title or company name
--  Pagination
--  Toast notifications
+-  Job application
+-  Applicant review
+-  Application status update
 
 <h3> Thought Process</h3>
 
