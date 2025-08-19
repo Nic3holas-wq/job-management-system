@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const URL = "http://192.168.43.102:8000/"
+export const URL = "http://10.0.2.15:8000/"
 const api = axios.create({
-  baseURL: "http://192.168.43.102:8000/api/",
+  baseURL: "http://10.0.2.15:8000/api/",
 });
 
 api.interceptors.request.use(
