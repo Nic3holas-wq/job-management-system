@@ -27,7 +27,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 import base64
 from rest_framework.views import APIView
+from decouple import config
 
+BASE_URL = config('BASE_URL')
 
 # ✅ Function-based view for user profile
 @api_view(['GET'])
@@ -100,7 +102,7 @@ def register_user(request):
         signed_data = signer.sign(payload)
         encoded_data = base64.urlsafe_b64encode(signed_data.encode()).decode()
 
-        activation_link = f"http://10.0.2.15:8000/api/activate/{encoded_data}/"
+        activation_link = f"${BASE_URL}/api/activate/{encoded_data}/"
 
 
         # Send activation email
@@ -172,7 +174,7 @@ def activate_user(request, token):
         Profile.objects.create(user=user)
 
         # Redirect to frontend (optional)
-        return redirect("http://10.0.2.15:5173/signin?verified=true")
+        return redirect("${BASE_URL}/signin?verified=true")
 
     except SignatureExpired:
         return Response({'detail': 'Activation link has expired.'}, status=status.HTTP_400_BAD_REQUEST)
